@@ -1,406 +1,724 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ishtiaque Ahmed | AI Researcher & Educator</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ishtiaque Ahmed — Computer Vision &amp; Medical Image Analysis</title>
+<meta name="description" content="Ishtiaque Ahmed — MSc researcher in Computer Vision, 3D Reconstruction and Medical Image Analysis at Daffodil International University.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0a0c10;
+    --panel:#12151b;
+    --panel-2:#181c24;
+    --line:#262b35;
+    --text:#e7e5e0;
+    --muted:#8a8f9c;
+    --near:#f2a33d;   /* amber  — depth: near  */
+    --mid:#6c8cff;    /* violet — depth: mid   */
+    --far:#34c6c6;    /* cyan   — depth: far   */
+    --grad: linear-gradient(90deg, var(--mid), var(--far), var(--near));
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'IBM Plex Sans', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --maxw: 1080px;
+  }
 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--ink);
+    color:var(--text);
+    font-family:var(--font-body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--mid);color:#0a0c10;}
 
+  a{color:inherit;}
+  img{max-width:100%;display:block;}
+
+  :focus-visible{
+    outline:2px solid var(--far);
+    outline-offset:3px;
+    border-radius:2px;
+  }
+
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:.78rem;
+    letter-spacing:.02em;
+    color:var(--muted);
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:14px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px;height:7px;border-radius:50%;
+    background:var(--grad);
+    flex:none;
+  }
+
+  h1,h2,h3{font-family:var(--font-display);font-weight:600;margin:0;letter-spacing:-.01em;}
+
+  section{padding:96px 0;border-top:1px solid var(--line);}
+  section:first-of-type{border-top:none;}
+
+  /* ---------- nav ---------- */
+  header.site{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    background:rgba(10,12,16,.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{
+    max-width:var(--maxw);margin:0 auto;padding:16px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+  }
+  .nav-id{
+    font-family:var(--font-mono);font-size:.85rem;color:var(--text);
+    display:flex;align-items:center;gap:9px;
+    text-decoration:none;
+  }
+  .nav-id .dot{width:8px;height:8px;border-radius:50%;background:var(--grad);}
+  .nav-links{display:flex;gap:26px;list-style:none;margin:0;padding:0;}
+  .nav-links a{
+    font-family:var(--font-mono);font-size:.78rem;color:var(--muted);
+    text-decoration:none;transition:color .2s ease;
+  }
+  .nav-links a:hover{color:var(--far);}
+  .nav-toggle{display:none;background:none;border:1px solid var(--line);color:var(--text);
+    font-family:var(--font-mono);font-size:.75rem;padding:6px 10px;border-radius:6px;cursor:pointer;}
+
+  @media (max-width:760px){
+    .nav-links{
+      position:fixed;top:58px;right:0;left:0;background:var(--panel);
+      border-bottom:1px solid var(--line);
+      flex-direction:column;gap:0;
+      max-height:0;overflow:hidden;transition:max-height .25s ease;
+    }
+    .nav-links.open{max-height:360px;}
+    .nav-links a{display:block;padding:14px 28px;border-top:1px solid var(--line);}
+    .nav-toggle{display:block;}
+  }
+
+  /* ---------- hero ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    padding-top:90px;
+    border-top:none;
+  }
+  #cloud{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    pointer-events:none;
+    opacity:.9;
+  }
+  .hero-inner{
+    position:relative;z-index:2;
+    max-width:var(--maxw);margin:0 auto;padding:0 28px;
+    width:100%;
+  }
+  .hero h1{
+    font-size:clamp(2.6rem, 6.5vw, 5.2rem);
+    line-height:1.02;
+    max-width:14ch;
+  }
+  .hero h1 .accent{
+    background:var(--grad);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.tag{
+    margin-top:22px;
+    max-width:46ch;
+    font-size:1.08rem;
+    color:var(--muted);
+  }
+  .hero .role{
+    font-family:var(--font-mono);
+    font-size:.82rem;
+    color:var(--far);
+    margin-top:18px;
+    letter-spacing:.02em;
+  }
+  .hero-cta{display:flex;gap:14px;margin-top:38px;flex-wrap:wrap;}
+  .btn{
+    font-family:var(--font-mono);font-size:.82rem;
+    padding:13px 22px;border-radius:8px;
+    text-decoration:none;
+    border:1px solid var(--line);
+    transition:transform .2s ease, border-color .2s ease, background .2s ease;
+    display:inline-block;
+  }
+  .btn-primary{background:var(--text);color:var(--ink);border-color:var(--text);}
+  .btn-primary:hover{transform:translateY(-2px);}
+  .btn-ghost:hover{border-color:var(--far);color:var(--far);transform:translateY(-2px);}
+
+  .scroll-cue{
+    position:absolute;bottom:34px;left:50%;transform:translateX(-50%);
+    font-family:var(--font-mono);font-size:.7rem;color:var(--muted);
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    z-index:2;
+  }
+  .scroll-cue span{width:1px;height:34px;background:linear-gradient(var(--muted),transparent);animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:.2;}50%{opacity:1;}}
+
+  /* ---------- about ---------- */
+  .about-grid{display:grid;grid-template-columns:1.3fr 1fr;gap:60px;align-items:start;}
+  .about-grid p{color:var(--muted);max-width:58ch;}
+  .about-grid p strong{color:var(--text);font-weight:500;}
+  .tags{display:flex;flex-wrap:wrap;gap:9px;margin-top:8px;}
+  .tag{
+    font-family:var(--font-mono);font-size:.74rem;
+    border:1px solid var(--line);border-radius:20px;
+    padding:7px 13px;color:var(--muted);
+    transition:all .2s ease;
+  }
+  .tag:hover{border-color:var(--far);color:var(--far);transform:translateY(-2px);}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;gap:30px;}}
+
+  /* ---------- timeline ---------- */
+  .timeline{position:relative;margin-top:50px;}
+  .timeline::before{
+    content:"";position:absolute;left:9px;top:6px;bottom:6px;width:1px;
+    background:linear-gradient(var(--line),var(--line));
+  }
+  .t-item{position:relative;padding-left:42px;margin-bottom:42px;}
+  .t-item:last-child{margin-bottom:0;}
+  .t-item::before{
+    content:"";position:absolute;left:2px;top:6px;width:15px;height:15px;border-radius:50%;
+    background:var(--ink);border:2px solid var(--mid);
+  }
+  .t-item.research::before{border-color:var(--far);}
+  .t-item.education::before{border-color:var(--near);}
+  .t-meta{
+    font-family:var(--font-mono);font-size:.74rem;color:var(--muted);
+    display:flex;gap:12px;flex-wrap:wrap;margin-bottom:6px;
+  }
+  .t-meta .cat{
+    color:var(--far);text-transform:uppercase;letter-spacing:.05em;
+  }
+  .t-item.education .cat{color:var(--near);}
+  .t-item.research .cat{color:var(--far);}
+  .t-item.teaching .cat{color:var(--mid);}
+  .t-item h3{font-size:1.18rem;}
+  .t-item .org{color:var(--muted);font-size:.92rem;margin-top:3px;}
+  .t-item .desc{color:var(--muted);margin-top:8px;font-size:.95rem;max-width:62ch;}
+
+  /* ---------- cards / tilt ---------- */
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px;}
+  .grid-2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:46px;}
+  @media (max-width:900px){.grid-3{grid-template-columns:1fr;}.grid-2{grid-template-columns:1fr;}}
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px;
+    transform-style:preserve-3d;
+    transition:border-color .25s ease, background .25s ease;
+    will-change:transform;
+  }
+  .card:hover{border-color:var(--mid);background:var(--panel-2);}
+  .card .id{
+    font-family:var(--font-mono);font-size:.72rem;color:var(--muted);
+    display:flex;justify-content:space-between;margin-bottom:14px;
+  }
+  .card .id .status{
+    color:var(--near);
+  }
+  .card h3{font-size:1.06rem;line-height:1.35;margin-bottom:8px;}
+  .card .authors{font-size:.84rem;color:var(--muted);margin-bottom:10px;}
+  .card .venue{font-family:var(--font-mono);font-size:.76rem;color:var(--far);}
+  .card .link{
+    display:inline-block;margin-top:14px;font-family:var(--font-mono);font-size:.76rem;
+    color:var(--text);text-decoration:none;border-bottom:1px solid var(--line);
+  }
+  .card .link:hover{border-color:var(--far);color:var(--far);}
+  .card p.desc{color:var(--muted);font-size:.92rem;margin-top:10px;}
+  .card .stack{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;}
+  .card .stack span{
+    font-family:var(--font-mono);font-size:.68rem;color:var(--muted);
+    border:1px solid var(--line);border-radius:5px;padding:3px 7px;
+  }
+
+  /* ---------- skills ---------- */
+  .skill-group{margin-bottom:30px;}
+  .skill-group h4{
+    font-family:var(--font-mono);font-size:.74rem;color:var(--muted);
+    text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-weight:500;
+  }
+
+  /* ---------- recognition ---------- */
+  .award{
+    display:grid;grid-template-columns:70px 1fr;gap:18px;
+    padding:16px 0;border-bottom:1px solid var(--line);
+  }
+  .award:last-child{border-bottom:none;}
+  .award .yr{font-family:var(--font-mono);font-size:.8rem;color:var(--near);}
+  .award h4{font-size:.98rem;font-weight:500;}
+  .award p{margin:4px 0 0;color:var(--muted);font-size:.86rem;}
+
+  /* ---------- contact ---------- */
+  .contact-wrap{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:30px;}
+  .contact-links{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
+  .contact-links a{
+    font-family:var(--font-mono);font-size:.95rem;text-decoration:none;color:var(--text);
+    display:inline-flex;align-items:center;gap:10px;width:fit-content;
+    border-bottom:1px solid transparent;
+  }
+  .contact-links a:hover{color:var(--far);border-color:var(--far);}
+  footer{
+    padding:30px 0;border-top:1px solid var(--line);
+    font-family:var(--font-mono);font-size:.72rem;color:var(--muted);
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:translateY(0);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001s !important; transition-duration:.001s !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
 </head>
 <body>
 
-    <div id="audioControl" class="audio-control paused">🎵</div>
-    <audio id="bgMusic" loop>
-        <source src="music\smith-solace-edm-mix-141706.mp3" type="audio/mpeg">
-    </audio>
+<header class="site">
+  <nav class="nav">
+    <a href="#top" class="nav-id"><span class="dot"></span>Ishtiaque Ahmed</a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks">menu</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">/about</a></li>
+      <li><a href="#timeline">/timeline</a></li>
+      <li><a href="#publications">/publications</a></li>
+      <li><a href="#projects">/projects</a></li>
+      <li><a href="#skills">/skills</a></li>
+      <li><a href="#recognition">/recognition</a></li>
+      <li><a href="#contact">/contact</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <div id="canvas-container"></div>
-
-    <nav>
-        <div class="logo">Ishtiaque<span>.Dev</span></div>
-        <div class="nav-links">
-            <a href="#about">About</a>
-            <a href="#experience">Experience</a>
-            <a href="#research">Research</a>
-            <a href="#projects">Projects</a>
-            <a href="#contact">Contact</a>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <span class="badge">Researcher & Educator</span>
-                <h1>Advancing AI through <br> 3D Reconstruction & <br> Deep Learning.</h1>
-                <p>Hi, I'm <strong>Ishtiaque Ahmed</strong>. A Computer Science researcher focused on Health Informatics, Point Cloud Generation, and empowering the next generation of engineers.</p>
-                
-                <div class="cta-group">
-                    <a href="#research" class="btn">View Publications <i class="fas fa-arrow-right"></i></a>
-                    <a href="https://github.com/Ishtiaque354" target="_blank" class="btn btn-outline"><i class="fab fa-github"></i> Github</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="about">
-        <div class="container">
-            <div class="card">
-                <h2 class="section-title">About Me</h2>
-                <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-muted);">
-                    I am a dedicated educator and researcher currently pursuing my MSc in Computer Science and Engineering (Data Science) at Daffodil International University, following the successful completion of my BSc in CSE (CGPA 3.89). My passion lies in investigating innovations in artificial intelligence, particularly in <strong>3D Reconstruction</strong> and <strong>Medical Imaging</strong>. Beyond research, I am the Founder of <em>Q-Bit Learning</em> and a content creator committed to making technology education accessible in Bangla.
-                    <!-- I am a dedicated educator and researcher currently pursuing my BSc in CSE at Daffodil International University (CGPA 3.89). My passion lies in investigating innovations in artificial intelligence, specifically in <strong>3D Reconstruction</strong> and <strong>Medical Imaging</strong>. Beyond research, I am the Founder of <em>Q-Bit Learning</em> and a content creator making tech education accessible in Bangla. -->
-                </p>
-                <div class="skills-container" style="margin-top: 2rem;">
-                    <span class="skill-tag">Python</span>
-                    <span class="skill-tag">PyTorch</span>
-                    <span class="skill-tag">TensorFlow</span>
-                    <span class="skill-tag">Open3D</span>
-                    <span class="skill-tag">OpenCV</span>
-                    <span class="skill-tag">Data Mining</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-<section id="experience">
-    <div class="container">
-        <h2 class="section-title">Experience</h2>
-
-        <div class="timeline">
-
-            <div class="timeline-item">
-                <div class="timeline-role">Lecturer (Contractual)</div>
-                <div class="timeline-org">
-                    Daffodil International University | Oct 2025 – Present
-                </div>
-                <p style="color: var(--text-muted);">
-                    Teaching undergraduate and graduate-level courses, preparing course materials, conducting evaluations, and mentoring students in academic and research activities.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-role">Teaching Assistant</div>
-                <div class="timeline-org">
-                    Daffodil International University | Feb 2025 – Dec 2025
-                </div>
-                <p style="color: var(--text-muted);">
-                    Assisted in Algorithms and MSc-level Machine Learning Techniques courses. Supported lab sessions, evaluated assignments, and mentored students for thesis defense.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-role">Researcher</div>
-                <div class="timeline-org">
-                    Health Informatics Research Lab (HIRL) | Sep 2023 – Present
-                </div>
-                <p style="color: var(--text-muted);">
-                    Conducting research on deep learning–based 3D reconstruction, focusing on depth estimation, point cloud generation, and mesh modeling for medical applications.
-                </p>
-            </div>
-
-            <div class="timeline-item">
-                <div class="timeline-role">Founder & Co-CEO</div>
-                <div class="timeline-org">
-                    Q-Bit Learning | May 2023 – Dec 2024
-                </div>
-                <p style="color: var(--text-muted);">
-                    Led educational platform development, curriculum design, instructor coordination, and project-based learning initiatives.
-                </p>
-            </div>
-
-        </div>
+<section class="hero" id="top">
+  <svg id="cloud" viewBox="0 0 1000 1000" preserveAspectRatio="xMidYMid slice"></svg>
+  <div class="hero-inner">
+    <p class="role">// computer vision &amp; medical image analysis</p>
+    <h1>Reconstructing <span class="accent">structure</span> from what scans can't show directly.</h1>
+    <p class="tag">I'm Ishtiaque Ahmed — an MSc researcher at Daffodil International University, working on 3D reconstruction, segmentation and vision transformers for medical imagery: colonoscopy, knee MRI, and the data pipelines in between.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="#publications">View publications</a>
+      <a class="btn btn-ghost" href="#contact">Get in touch</a>
     </div>
+  </div>
+  <div class="scroll-cue"><span></span>scroll</div>
 </section>
 
-    <section id="research">
-        <div class="container">
-            <h2 class="section-title">Selected Research</h2>
-            <div class="research-grid">
-                
-                <div class="card">
-                    <div class="pub-year">2025 - IEEE ECCE</div>
-                    <h3 style="margin: 1rem 0;">3D Reconstruction of Colonic Polyps</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">A Methodology for Improved Visualization and Analysis. Focuses on improving medical diagnostics through advanced 3D modeling.</p>
-                </div>
-
-                <div class="card">
-                    <div class="pub-year">2025 - ICECAI</div>
-                    <h3 style="margin: 1rem 0;">Bangla Sentiment Analysis</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">A Comparative Study of Transformer-Based Models and Machine Learning Techniques for Enhancing Bangla Sentiment Analysis.</p>
-                </div>
-
-                <div class="card" style="border-color: var(--accent);">
-                    <div class="pub-year">Research Grant - ICCCAD</div>
-                    <h3 style="margin: 1rem 0;">DhuliX Project</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">Funded by ICCCAD. Strengthening Bangladesh's air quality monitoring through real-time mobile-based data collection.</p>
-                </div>
-
-            </div>
+<section id="about">
+  <div class="wrap">
+    <p class="eyebrow">/research/about</p>
+    <div class="about-grid">
+      <div class="reveal">
+        <h2 style="font-size:1.7rem;margin-bottom:18px;">About</h2>
+        <p>I work at the intersection of <strong>computer vision</strong> and <strong>medical image analysis</strong> — reconstructing 3D anatomy from 2D endoscopic video, and segmenting tissue from MRI volumes that rarely have clean boundaries. My undergraduate thesis turned colonoscopic footage into navigable 3D surfaces for clinical review; my current MSc thesis, <strong>RAVE-Knee</strong>, applies retrieval-augmented visual embeddings to multi-class knee cartilage segmentation.</p>
+        <p style="margin-top:16px;">I currently lecture in the Department of CSE at DIU, where I also mentor undergraduate students through the same thesis process I'm still navigating myself. Outside of imaging, I've contributed to a real-time air quality monitoring deployment and co-authored work in NLP and sentiment analysis.</p>
+      </div>
+      <div class="reveal">
+        <h3 style="font-size:.95rem;font-family:var(--font-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px;">Research interests</h3>
+        <div class="tags">
+          <span class="tag">Computer Vision</span>
+          <span class="tag">Medical Image Analysis</span>
+          <span class="tag">3D Reconstruction</span>
+          <span class="tag">Deep Learning</span>
+          <span class="tag">Vision Transformers</span>
+          <span class="tag">Image Segmentation</span>
+          <span class="tag">Multimodal AI</span>
+          <span class="tag">LLMs</span>
+          <span class="tag">Retrieval-Augmented Learning</span>
         </div>
-    </section>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <section id="projects">
-        <div class="container">
-            <h2 class="section-title">Technical Projects</h2>
-            <div class="research-grid">
-                
-                <a href="https://github.com/Ishtiaque354/Brain-Tumor-Classification-DL" target="_blank" class="card">
-                    <h3>Brain Tumor Classification</h3>
-                    <p style="margin-top: 1rem; color: var(--text-muted);">Custom CNN architecture with transfer learning for MRI image analysis. Rigorously evaluated with hyperparameter tuning.</p>
-                    <span style="display: block; margin-top: 1rem; color: var(--accent);">View Code &rarr;</span>
-                </a>
+<section id="timeline">
+  <div class="wrap">
+    <p class="eyebrow">/research/timeline</p>
+    <h2 style="font-size:1.7rem;">Education &amp; Experience</h2>
+    <div class="timeline">
 
-                <a href="https://github.com/Ishtiaque354/Diabetics-Prediction-Using-Machine-Learning/blob/main/diabetics prediction.ipynb" target="_blank" class="card">
-                    <h3>Diabetes Prediction ML</h3>
-                    <p style="margin-top: 1rem; color: var(--text-muted);">End-to-end pipeline using Pima Indians dataset. Features custom preprocessing and optimization for real-world deployment.</p>
-                    <span style="display: block; margin-top: 1rem; color: var(--accent);">View Code &rarr;</span>
-                </a>
+      <div class="t-item teaching reveal">
+        <div class="t-meta"><span class="cat">Teaching</span><span>Oct 2025 — Apr 2026</span></div>
+        <h3>Lecturer, Dept. of Computer Science &amp; Engineering</h3>
+        <div class="org">Daffodil International University</div>
+        <p class="desc">Designing and teaching CS coursework, supporting students, and contributing to departmental academic activities.</p>
+      </div>
 
-            </div>
+      <div class="t-item education reveal">
+        <div class="t-meta"><span class="cat">Education</span><span>Jul 2025 — Exp. Sep 2026</span></div>
+        <h3>MSc in Computer Science &amp; Engineering, Major in Data Science</h3>
+        <div class="org">Daffodil International University · CGPA 3.8/4.0</div>
+        <p class="desc">Thesis: <em>RAVE-Knee — Retrieval-Augmented Visual Embedding for Knee Cartilage Segmentation</em> (ongoing). Supervisor: Dr. Md Zahid Hasan.</p>
+      </div>
+
+      <div class="t-item teaching reveal">
+        <div class="t-meta"><span class="cat">Teaching</span><span>Feb 2025 — Sep 2025</span></div>
+        <h3>Teaching Assistant, Dept. of CSE</h3>
+        <div class="org">Daffodil International University</div>
+        <p class="desc">Supported students in Algorithms and Theory of Computation outside class hours; mentored final-year BSc students through thesis defense preparation. Supervisor: Dr. S. M. Aminul Haque.</p>
+      </div>
+
+      <div class="t-item research reveal">
+        <div class="t-meta"><span class="cat">Research</span><span>May 2023 — Dec 2024</span></div>
+        <h3>Research Assistant, Health Informatics Research Lab (HIRL)</h3>
+        <div class="org">Daffodil International University</div>
+        <p class="desc">Researched 3D reconstruction from colonoscopic imagery; published findings at international conferences.</p>
+      </div>
+
+      <div class="t-item education reveal">
+        <div class="t-meta"><span class="cat">Education</span><span>Jun 2021 — Jun 2025</span></div>
+        <h3>BSc in Computer Science &amp; Engineering</h3>
+        <div class="org">Daffodil International University · CGPA 3.89/4.0 — top 6th in batch</div>
+        <p class="desc">Thesis: <em>3D Reconstruction of Colonic Polyps — A Methodology for Improved Visualization and Analysis.</em> Supervisor: Dr. Md Zahid Hasan.</p>
+      </div>
+
+      <div class="t-item education reveal">
+        <div class="t-meta"><span class="cat">Education</span><span>Jun 2017 — Jul 2019</span></div>
+        <h3>Higher Secondary Certificate, Science</h3>
+        <div class="org">Milestone College · GPA 4.75/5.0</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap">
+    <p class="eyebrow">/research/publications</p>
+    <h2 style="font-size:1.7rem;">Publications</h2>
+    <div class="grid-2">
+
+      <div class="card tilt reveal">
+        <div class="id"><span>NCA · 2026</span><span class="status">Under review — Q1 journal</span></div>
+        <h3>Geometry Aware 3D Reconstruction of Colonoscopic Imagery for Clinical Visualization and Surface Feature Extraction</h3>
+        <div class="venue">Submitted to Neural Computing and Applications</div>
+      </div>
+
+      <div class="card tilt reveal">
+        <div class="id"><span>ECCE 2025</span><span class="status">Published</span></div>
+        <h3>3D Reconstruction of Colonic Polyps: A Methodology for Improved Visualization and Analysis</h3>
+        <div class="authors">Ishtiaque Ahmed, Pranto Saha, Md. Saimim Islam Khan Hamim, et al.</div>
+        <div class="venue">ECCE 2025, pp. 1–7</div>
+        <a class="link" href="https://doi.org/10.1109/ECCE64574.2025.11013942" target="_blank" rel="noopener">DOI: 10.1109/ECCE64574.2025.11013942 →</a>
+      </div>
+
+      <div class="card tilt reveal">
+        <div class="id"><span>ECAI 2025</span><span class="status">Published</span></div>
+        <h3>A Comparative Study of Transformer-Based Models and Machine Learning Techniques for Enhancing Bangla Sentiment Analysis</h3>
+        <div class="authors">Md. Saimim Islam Khan Hamim, Ishtiaque Ahmed, Tawhidul Islam Sazid, et al.</div>
+        <div class="venue">17th ICECAI 2025, pp. 1–9</div>
+        <a class="link" href="https://doi.org/10.1109/ECAI65401.2025.11095616" target="_blank" rel="noopener">DOI: 10.1109/ECAI65401.2025.11095616 →</a>
+      </div>
+
+      <div class="card tilt reveal">
+        <div class="id"><span>ICACTCE '24</span><span class="status">Published</span></div>
+        <h3>Enhancing Sentiment Analysis Accuracy in E-commerce: An Integrated NLP Approach to Amazon Review Classification</h3>
+        <div class="authors">Md. Saimim Islam Khan Hamim, Md. Alif Sheakh, Ishtiaque Ahmed, et al.</div>
+        <div class="venue">LNNS vol. 1313, Springer, Cham</div>
+        <a class="link" href="https://doi.org/10.1007/978-3-031-94623-3_23" target="_blank" rel="noopener">DOI: 10.1007/978-3-031-94623-3_23 →</a>
+      </div>
+
+    </div>
+    <p style="margin-top:24px;"><a class="btn btn-ghost" href="https://scholar.google.com" target="_blank" rel="noopener">View on Google Scholar →</a></p>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <p class="eyebrow">/research/projects</p>
+    <h2 style="font-size:1.7rem;">Projects</h2>
+    <div class="grid-3">
+
+      <div class="card tilt reveal">
+        <div class="id"><span>THESIS · MSC</span><span class="status">In progress</span></div>
+        <h3>RAVE-Knee</h3>
+        <p class="desc">Retrieval-augmented visual embeddings for multi-class knee cartilage segmentation on MRI volumes, with hardware-adaptive training configuration.</p>
+        <div class="stack"><span>PyTorch</span><span>SwinUNETR</span><span>Medical Imaging</span></div>
+      </div>
+
+      <div class="card tilt reveal">
+        <div class="id"><span>THESIS · BSC</span><span class="status">Complete</span></div>
+        <h3>3D Colonoscopic Reconstruction</h3>
+        <p class="desc">Geometry-aware pipeline reconstructing navigable 3D surfaces from 2D colonoscopic video, for clinical visualization and surface feature extraction.</p>
+        <div class="stack"><span>Open3D</span><span>Python</span><span>3D Vision</span></div>
+      </div>
+
+      <div class="card tilt reveal">
+        <div class="id"><span>ICCCAD · CAPRES</span><span class="status">Funded</span></div>
+        <h3>Stardust — Real-Time Air Quality Monitoring</h3>
+        <p class="desc">Contributed to DhuliX, a climate resilience project: portable sensors feeding a real-time, mobile-based air quality monitor to support adaptive policy and public awareness.</p>
+        <div class="stack"><span>IoT</span><span>Mobile</span><span>Climate Resilience</span></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="eyebrow">/research/skills</p>
+    <h2 style="font-size:1.7rem;margin-bottom:36px;">Skills</h2>
+
+    <div class="skill-group">
+      <h4>Machine learning</h4>
+      <div class="tags">
+        <span class="tag">Supervised &amp; Unsupervised Learning</span>
+        <span class="tag">Regression</span>
+        <span class="tag">Random Forest</span>
+        <span class="tag">PCA</span>
+        <span class="tag">Gradient Descent</span>
+        <span class="tag">SVMs</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Deep learning &amp; NLP architectures</h4>
+      <div class="tags">
+        <span class="tag">CNN</span><span class="tag">RNN</span><span class="tag">LSTM</span><span class="tag">Transformer</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Languages &amp; frameworks</h4>
+      <div class="tags">
+        <span class="tag">Python</span><span class="tag">C/C++</span><span class="tag">PyTorch</span><span class="tag">TensorFlow</span><span class="tag">FastAPI</span><span class="tag">Open3D</span>
+      </div>
+    </div>
+
+    <div class="skill-group">
+      <h4>Research &amp; collaboration</h4>
+      <div class="tags">
+        <span class="tag">Mendeley</span><span class="tag">Connected Papers</span><span class="tag">Notion</span><span class="tag">Weights &amp; Biases</span><span class="tag">Trello</span><span class="tag">LaTeX</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="recognition">
+  <div class="wrap">
+    <p class="eyebrow">/research/recognition</p>
+    <h2 style="font-size:1.7rem;margin-bottom:10px;">Awards &amp; Volunteering</h2>
+
+    <div style="margin-top:30px;">
+      <div class="award reveal">
+        <span class="yr">2026</span>
+        <div><h4>Champion — DoR Poster Presentation</h4></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2025</span>
+        <div><h4>Session Moderator</h4><p>International Conference on Intelligent Data Analysis and Applications (IDAA 2025)</p></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2025</span>
+        <div><h4>Judge &amp; Problem Setter — Prompt Battle</h4><p>Organized by CPC, DIU</p></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2024</span>
+        <div><h4>Organizer &amp; Judge — Prompt Battle: First Ever Prompt Engineering Contest</h4><p>Organized by CPC, DIU</p></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2021–24</span>
+        <div><h4>Merit Scholarship &amp; Tuition Fee Waiver</h4><p>Awarded three times for achieving SGPA 4.00 during undergraduate studies</p></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2024</span>
+        <div><h4>Regional Volunteer — ICPC Dhaka Regional Contest</h4><p>Coordinated with teams and organizers to manage closing ceremony program flow</p></div>
+      </div>
+      <div class="award reveal">
+        <span class="yr">2022</span>
+        <div><h4>Volunteer — Society for the Popularization of Science, Bangladesh</h4><p>Communications team; contributed to organizing the Ada Lovelace Celebration</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <p class="eyebrow">/research/contact</p>
+    <div class="contact-wrap">
+      <div>
+        <h2 style="font-size:2rem;max-width:18ch;">Open to PhD opportunities &amp; research collaborations.</h2>
+        <div class="contact-links">
+          <a href="mailto:ishtiaque15-4217@diu.edu.bd">ishtiaque15-4217@diu.edu.bd</a>
+          <a href="tel:+8801539513850">+880 1539 513850</a>
+          <a href="https://www.linkedin.com/in/ishtiaque-ahmed966/" target="_blank" rel="noopener">linkedin.com/in/ishtiaque-ahmed966</a>
+          <a href="https://ishtiaque354.github.io/ishtiaque.dev/" target="_blank" rel="noopener">ishtiaque354.github.io/ishtiaque.dev</a>
         </div>
-    </section>
+      </div>
+      <p style="color:var(--muted);max-width:26ch;font-size:.9rem;">Gazipur, Dhaka, Bangladesh</p>
+    </div>
+  </div>
+</section>
 
-    <section id="contact" style="margin-bottom: 4rem;">
-        <div class="container">
-            <div class="card" style="text-align: center; padding: 4rem;">
-                <h2>Let's Collaborate</h2>
-                <p style="margin: 1.5rem 0; color: var(--text-muted);">
-                    Interested in Deep Learning, 3D Reconstruction, or Educational Outreach?
-                </p>
-                <a href="mailto:ishtiaque966@gmail.com" class="btn">
-                    <i class="fas fa-envelope"></i> ishtiaque966@gmail.com
-                </a>
-                <div style="margin-top: 2rem; font-size: 0.9rem; color: var(--text-muted);">
-                    <i class="fas fa-map-marker-alt"></i> Ashulia, Dhaka, Bangladesh
-                </div>
-            </div>
-        </div>
-    </section>
+<footer>
+  <div class="wrap" style="display:flex;justify-content:space-between;width:100%;flex-wrap:wrap;gap:10px;">
+    <span>© <span id="yr"></span> Ishtiaque Ahmed</span>
+    <span>built with vanilla JS · no frameworks</span>
+  </div>
+</footer>
 
-    <footer>
-        <div class="social-links">
-            <a href="https://ishtiaque354.github.io/Ishtiaque-Portfolio/"><i class="fas fa-globe"></i></a>
-            <a href="https://github.com/Ishtiaque354"><i class="fab fa-github"></i></a>
-            <a href="mailto:ishtiaque966@gmail.com"><i class="fas fa-envelope"></i></a>
-            <a href="https://youtu.be/Bq4P6tiAHwc?si=pxqUJXhn4el4qifs"><i class="fab fa-youtube"></i></a>
-        </div>
-        <p style="margin-top: 1rem; color: #555; font-size: 0.8rem;">&copy; 2025 Ishtiaque Ahmed. Built with Three.js</p>
-    </footer>
+<script>
+(function(){
+  // ---- nav toggle ----
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', function(){
+    var open = navLinks.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  navLinks.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){ navLinks.classList.remove('open'); });
+  });
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
-    <script>
-        // --- AUDIO CONTROL ---
-        const audio = document.getElementById('bgMusic');
-        const audioBtn = document.getElementById('audioControl');
-        audioBtn.addEventListener('click', () => {
-            if(audio.paused) {
-                audio.play().catch(e => console.log("Interaction needed"));
-                audioBtn.classList.remove('paused');
-                audioBtn.innerHTML = "🔊";
-            } else {
-                audio.pause();
-                audioBtn.classList.add('paused');
-                audioBtn.innerHTML = "🎵";
-            }
-        });
+  // ---- footer year ----
+  document.getElementById('yr').textContent = new Date().getFullYear();
 
-        // --- THREE.JS: SPIRAL GALAXY ENGINE ---
-        const scene = new THREE.Scene();
-        // Dark fog for depth (Simulates deep space)
-        scene.fog = new THREE.FogExp2(0x050505, 0.02);
-
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        const container = document.getElementById('canvas-container');
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        container.appendChild(renderer.domElement);
-
-        // --- HELPERS ---
-        function createTextTexture(text, color) {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const fontSize = 48; 
-            ctx.font = `Bold ${fontSize}px "Space Grotesk", Arial`;
-            const width = ctx.measureText(text).width;
-            canvas.width = width + 20;
-            canvas.height = fontSize + 20;
-
-            ctx.fillStyle = color;
-            ctx.font = `Bold ${fontSize}px "Space Grotesk", Arial`;
-            ctx.textBaseline = 'middle';
-            ctx.fillText(text, 10, canvas.height/2);
-
-            return new THREE.CanvasTexture(canvas);
+  // ---- reveal on scroll ----
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var revealEls = document.querySelectorAll('.reveal');
+  if (reduceMotion) {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  } else if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
         }
+      });
+    }, {threshold:.15});
+    revealEls.forEach(function(el){ io.observe(el); });
+  } else {
+    revealEls.forEach(function(el){ el.classList.add('in'); });
+  }
 
-        // --- GALAXY CONFIGURATION ---
-        const galaxyGroup = new THREE.Group();
-        scene.add(galaxyGroup);
+  // ---- 3D tilt hover on cards ----
+  if (!reduceMotion && window.matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('.tilt').forEach(function(card){
+      var rect;
+      card.addEventListener('mousemove', function(e){
+        rect = card.getBoundingClientRect();
+        var px = (e.clientX - rect.left) / rect.width;
+        var py = (e.clientY - rect.top) / rect.height;
+        var rx = (py - 0.5) * -8;
+        var ry = (px - 0.5) * 10;
+        card.style.transform = 'perspective(700px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg) translateY(-3px)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = 'perspective(700px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      });
+    });
+  }
 
-        // 1. THE WORDS (Text Stars)
-        const words = [
-            "AI", "Deep Learning", "Python", "3D", "Vision", "Research",
-            "Point Cloud", "Mesh", "Neural", "Tensor", "Torch", "OpenCV",
-            "Data", "Algorithm", "Model", "Loss", "Optimization", "Matrix",
-            "0", "1", "π", "Σ", "∫", "∇", "∞"
-        ];
+  // ---- 3D point-cloud hero ----
+  var svg = document.getElementById('cloud');
+  var NS = 'http://www.w3.org/2000/svg';
+  var W = 1000, H = 1000, CX = W*0.72, CY = H*0.46;
+  var FOCAL = 460, R = 230;
+  var isMobile = window.innerWidth < 760;
+  var N = isMobile ? 110 : 230;
 
-        const textParticlesCount = 150;
-        const spiralRadius = 30;
-        const branches = 3;
-        const spinFactor = 4;
-        
-        for(let i=0; i<textParticlesCount; i++) {
-            const word = words[Math.floor(Math.random() * words.length)];
-            
-            // Color mix: mostly white/gray, some Accent Green
-            const isAccent = Math.random() > 0.7; 
-            const color = isAccent ? "#00ffa3" : "#cccccc";
+  function lerp(a,b,t){ return a + (b-a)*t; }
+  function hexToRgb(hex){
+    var v = parseInt(hex.slice(1),16);
+    return [(v>>16)&255, (v>>8)&255, v&255];
+  }
+  var cNear = hexToRgb('#f2a33d');
+  var cMid  = hexToRgb('#6c8cff');
+  var cFar  = hexToRgb('#34c6c6');
+  function depthColor(t){ // t: 0 (near) -> 1 (far)
+    var a, b, tt;
+    if (t < 0.5) { a = cMid; b = cFar; tt = t/0.5; }
+    else { a = cFar; b = cNear; tt = (t-0.5)/0.5; }
+    var r = Math.round(lerp(a[0],b[0],tt));
+    var g = Math.round(lerp(a[1],b[1],tt));
+    var bl = Math.round(lerp(a[2],b[2],tt));
+    return 'rgb(' + r + ',' + g + ',' + bl + ')';
+  }
 
-            const texture = createTextTexture(word, color);
-            const material = new THREE.SpriteMaterial({
-                map: texture,
-                transparent: true,
-                opacity: 0.8,
-                depthWrite: false,
-                blending: THREE.AdditiveBlending
-            });
+  var pts = [];
+  for (var i = 0; i < N; i++) {
+    var phi = Math.acos(1 - 2*(i+0.5)/N);
+    var theta = Math.PI * (1 + Math.sqrt(5)) * i;
+    var jitter = 1 + 0.22*Math.sin(3*theta)*Math.cos(2*phi);
+    pts.push({
+      x: Math.sin(phi)*Math.cos(theta) * R * jitter,
+      y: Math.sin(phi)*Math.sin(theta) * R * jitter,
+      z: Math.cos(phi) * R * jitter,
+      el: null
+    });
+    var c = document.createElementNS(NS,'circle');
+    c.setAttribute('r','2');
+    svg.appendChild(c);
+    pts[i].el = c;
+  }
 
-            const sprite = new THREE.Sprite(material);
+  var rotY = 0, rotX = 0.25;
+  var targetTiltX = 0, targetTiltY = 0;
+  var tiltX = 0, tiltY = 0;
 
-            // SPIRAL MATH
-            const radius = Math.random() * spiralRadius;
-            const branchAngle = (i % branches) / branches * Math.PI * 2;
-            const spinAngle = radius * spinFactor;
-            
-            // Randomness (Spread)
-            const randomX = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 2;
-            const randomY = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 2;
-            const randomZ = Math.pow(Math.random(), 3) * (Math.random() < 0.5 ? 1 : -1) * 2;
+  window.addEventListener('mousemove', function(e){
+    targetTiltY = (e.clientX / window.innerWidth - 0.5) * 0.6;
+    targetTiltX = (e.clientY / window.innerHeight - 0.5) * -0.4;
+  });
 
-            const x = Math.cos(branchAngle + spinAngle) * radius + randomX;
-            const y = randomY; // Flatten galaxy slightly
-            const z = Math.sin(branchAngle + spinAngle) * radius + randomZ;
+  function frame(){
+    rotY += reduceMotion ? 0 : 0.0024;
+    tiltX += (targetTiltX - tiltX) * 0.04;
+    tiltY += (targetTiltY - tiltY) * 0.04;
+    var cy = Math.cos(rotY), sy = Math.sin(rotY);
+    var cx = Math.cos(rotX+tiltX), sx = Math.sin(rotX+tiltX);
 
-            sprite.position.set(x, y, z);
+    for (var i=0;i<pts.length;i++){
+      var p = pts[i];
+      var x1 = p.x*cy - p.z*sy;
+      var z1 = p.x*sy + p.z*cy;
+      var y1 = p.y*cx - z1*sx;
+      var z2 = p.y*sx + z1*cx;
+      var x2 = x1 + tiltY*60;
 
-            // Scale down to look like "Stars"
-            const scale = 0.2 + Math.random() * 0.3; 
-            sprite.scale.set(scale * (texture.image.width/texture.image.height), scale, 1);
+      var scale = FOCAL / (FOCAL + z2 + R);
+      var sxp = CX + x2*scale;
+      var syp = CY + y1*scale;
+      var t = (z2 + R) / (2*R);
 
-            galaxyGroup.add(sprite);
-        }
+      p.el.setAttribute('cx', sxp.toFixed(1));
+      p.el.setAttribute('cy', syp.toFixed(1));
+      p.el.setAttribute('r', Math.max(0.6, 2.6*scale).toFixed(2));
+      p.el.setAttribute('fill', depthColor(t));
+      p.el.setAttribute('opacity', Math.max(0.15, scale*0.95).toFixed(2));
+    }
+    if (!reduceMotion) requestAnimationFrame(frame);
+  }
+  frame();
 
-        // 2. THE STARS (Background Dust)
-        const starGeo = new THREE.BufferGeometry();
-        const starCount = 2000;
-        const starPos = new Float32Array(starCount * 3);
-        const starColors = new Float32Array(starCount * 3);
+  window.addEventListener('resize', function(){
+    isMobile = window.innerWidth < 760;
+  });
+})();
+</script>
 
-        const colorInside = new THREE.Color('#ffffff');
-        const colorOutside = new THREE.Color('#00ffa3');
-
-        for(let i=0; i<starCount; i++) {
-            const i3 = i*3;
-            const radius = Math.random() * spiralRadius;
-            const branchAngle = (i % branches) / branches * Math.PI * 2;
-            const spinAngle = radius * spinFactor;
-
-            const randomX = (Math.random() - 0.5) * 3;
-            const randomY = (Math.random() - 0.5) * 3;
-            const randomZ = (Math.random() - 0.5) * 3;
-
-            starPos[i3] = Math.cos(branchAngle + spinAngle) * radius + randomX;
-            starPos[i3+1] = randomY;
-            starPos[i3+2] = Math.sin(branchAngle + spinAngle) * radius + randomZ;
-
-            // Color mixing
-            const mixedColor = colorInside.clone();
-            mixedColor.lerp(colorOutside, radius / spiralRadius);
-
-            starColors[i3] = mixedColor.r;
-            starColors[i3+1] = mixedColor.g;
-            starColors[i3+2] = mixedColor.b;
-        }
-
-        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-        starGeo.setAttribute('color', new THREE.BufferAttribute(starColors, 3));
-
-        const starMaterial = new THREE.PointsMaterial({
-            size: 0.05,
-            vertexColors: true,
-            depthWrite: false,
-            blending: THREE.AdditiveBlending
-        });
-
-        const starSystem = new THREE.Points(starGeo, starMaterial);
-        galaxyGroup.add(starSystem);
-
-        // --- INTERACTION STATE ---
-        camera.position.z = 20;
-        camera.position.y = 10;
-        camera.lookAt(0,0,0);
-
-        let mouseX = 0;
-        let mouseY = 0;
-        let scrollY = 0;
-
-        document.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX - window.innerWidth/2) * 0.0005;
-            mouseY = (e.clientY - window.innerHeight/2) * 0.0005;
-        });
-
-        window.addEventListener('scroll', () => {
-            scrollY = window.scrollY;
-        });
-
-        // --- ANIMATION LOOP ---
-        const clock = new THREE.Clock();
-
-        function animate() {
-            const elapsed = clock.getElapsedTime();
-
-            // Rotate Galaxy
-            galaxyGroup.rotation.y = elapsed * 0.05;
-
-            // Mouse Parallax (Tilt)
-            galaxyGroup.rotation.x = mouseY * 0.5;
-            galaxyGroup.rotation.z = mouseX * 0.5;
-
-            // Scroll Fly-Through
-            // Map scroll Y to Camera Z. 
-            // Start at Z=20, fly into Z=5
-            const targetZ = 20 - (scrollY * 0.015);
-            // Clamp minimum Z so we don't pass through completely
-            const clampedZ = Math.max(5, targetZ);
-            
-            // Smooth lerp
-            camera.position.z += (clampedZ - camera.position.z) * 0.05;
-
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-
-        animate();
-
-        // Resize
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-    </script>
 </body>
-
 </html>
-
