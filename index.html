@@ -230,6 +230,11 @@ a.accent:hover{border-color:var(--accent);}
 .pub-main h3{font-family:var(--serif);font-weight:600;font-size:1.12rem;line-height:1.4;margin-bottom:8px;}
 .pub-main .meta{color:var(--ink-soft);font-size:0.95rem;}
 .pub-main .author{font-family:var(--sans);font-size:0.8rem;color:var(--accent);margin-top:8px;}
+.pub-title-link{color:inherit;}
+.pub-title-link:hover h3{color:var(--accent);text-decoration:underline;text-underline-offset:3px;}
+.pub-links{display:flex;gap:16px;margin-top:10px;}
+.pub-links .pub-link{font-family:var(--sans);font-size:0.8rem;color:var(--ink-soft);border-bottom:1px solid var(--line);}
+.pub-links .pub-link:hover{color:var(--accent);border-color:var(--accent);}
 .pub-status{font-family:var(--sans);font-size:0.76rem;color:var(--ink-faint);white-space:nowrap;text-align:right;padding-top:4px;}
 .pub-row.hidden{display:none;}
 @media (max-width:640px){.pub-row{grid-template-columns:1fr;}.pub-status{text-align:left;}}
@@ -421,6 +426,7 @@ footer a:hover{color:var(--deep-text);}
     <p>If you're supervising research in these areas and think there's a fit, reach out &mdash; happy to share full CV, transcripts, and a longer research statement on request.</p>
     <div class="contact-ctas">
       <a href="https://linkedin.com/in/ishtiaque-ahmed966" target="_blank" rel="noopener" class="btn btn-primary">Connect on LinkedIn &#8599;</a>
+      <a href="https://scholar.google.com/citations?user=Kor13tQAAAAJ&hl=en" target="_blank" rel="noopener" class="btn btn-ghost">Google Scholar &#8599;</a>
       <a href="https://ishtiaque354.github.io/ishtiaque.dev" target="_blank" rel="noopener" class="btn btn-ghost">ishtiaque354.github.io &#8599;</a>
     </div>
   </div>
@@ -446,13 +452,14 @@ const RESEARCH_FOCUS = [
   {title:"Immersive 3D Visualization", desc:"Making reconstructed anatomy inspectable and interpretable for clinicians and researchers."}
 ];
 
+const SCHOLAR_URL = "https://scholar.google.com/citations?user=Kor13tQAAAAJ&hl=en";
 const PUBLICATIONS = [
-  {title:"Geometry-Aware 3D Reconstruction of Colonoscopic Images for Improved Polyp Visualization and Analysis", venue:"Neural Computing and Applications (Q1)", year:2026, status:"Submitted", type:"Journal", author:"First author"},
-  {title:"CUFSeg: Toward Reliable Few-Shot Nuclei Segmentation Under Domain Shift", venue:"Scientific Reports (Q1)", year:2026, status:"Submitted", type:"Journal", author:"Co-author"},
-  {title:"Kolmogorov–Arnold Networks for Vision: A Review", venue:"In preparation", year:2026, status:"Ongoing", type:"Review", author:"Lead author"},
-  {title:"3D Reconstruction of Colonic Polyps: A Methodology for Improved Visualization and Analysis", venue:"ECCE 2025", year:2025, status:"Published", type:"Conference", author:"First author"},
-  {title:"A Comparative Study of Transformer-Based Models for Bangla Sentiment Analysis", venue:"ECAI 2025", year:2025, status:"Published", type:"Conference", author:"Co-author"},
-  {title:"Enhancing Sentiment Analysis Accuracy in E-commerce Reviews", venue:"ICACTCE 2024", year:2024, status:"Published", type:"Conference", author:"Co-author"}
+  {title:"Geometry-Aware 3D Reconstruction of Colonoscopic Images for Improved Polyp Visualization and Analysis", venue:"Neural Computing and Applications (Q1)", year:2026, status:"Submitted", type:"Journal", author:"First author", scholar:false},
+  {title:"CUFSeg: Toward Reliable Few-Shot Nuclei Segmentation Under Domain Shift", venue:"Scientific Reports (Q1)", year:2026, status:"Submitted", type:"Journal", author:"Co-author", scholar:false},
+  {title:"Kolmogorov–Arnold Networks for Vision: A Review", venue:"In preparation", year:2026, status:"Ongoing", type:"Review", author:"Lead author", scholar:false},
+  {title:"3D Reconstruction of Colonic Polyps: A Methodology for Improved Visualization and Analysis", venue:"ECCE 2025", year:2025, status:"Published", type:"Conference", author:"First author", scholar:true, url:"https://ieeexplore.ieee.org/abstract/document/11013942/"},
+  {title:"A Comparative Study of Transformer-Based Models for Bangla Sentiment Analysis", venue:"ECAI 2025", year:2025, status:"Published", type:"Conference", author:"Co-author", scholar:true, url:"https://ieeexplore.ieee.org/abstract/document/11095616"},
+  {title:"Enhancing Sentiment Analysis Accuracy in E-commerce Reviews", venue:"ICACTCE 2024", year:2024, status:"Published", type:"Conference", author:"Co-author", scholar:true, url:"https://link.springer.com/chapter/10.1007/978-3-031-94623-3_23"}
 ];
 
 const TIMELINE = [
@@ -512,9 +519,34 @@ function renderPubs(){
     .forEach(p=>{
       const row = el('div','pub-row');
       const main = el('div','pub-main');
-      main.appendChild(el('h3',null,p.title));
+      if(p.url){
+        const titleLink = document.createElement('a');
+        titleLink.href = p.url; titleLink.target = '_blank'; titleLink.rel = 'noopener';
+        titleLink.className = 'pub-title-link';
+        const h3 = el('h3',null,p.title);
+        titleLink.appendChild(h3);
+        main.appendChild(titleLink);
+      }else{
+        main.appendChild(el('h3',null,p.title));
+      }
       main.appendChild(el('p','meta', (p.status==='Submitted' ? 'Submitted to ' : p.status==='Ongoing' ? '' : 'Published in ') + p.venue + ', ' + p.year + '.'));
       main.appendChild(el('p','author',p.author));
+      const linkRow = el('div','pub-links');
+      if(p.url){
+        const direct = document.createElement('a');
+        direct.href = p.url; direct.target = '_blank'; direct.rel = 'noopener';
+        direct.className = 'pub-link';
+        direct.textContent = 'Read paper ↗';
+        linkRow.appendChild(direct);
+      }
+      if(p.scholar){
+        const link = document.createElement('a');
+        link.href = SCHOLAR_URL; link.target = '_blank'; link.rel = 'noopener';
+        link.className = 'pub-link';
+        link.textContent = 'Google Scholar ↗';
+        linkRow.appendChild(link);
+      }
+      if(linkRow.children.length) main.appendChild(linkRow);
       row.appendChild(main);
       row.appendChild(el('div','pub-status', p.status));
       list.appendChild(row);
