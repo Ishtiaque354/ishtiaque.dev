@@ -46,6 +46,14 @@ html[data-theme="dark"]{
   --accent-soft:#1C3532;
   --line:#2A2E31;
 }
+/* fixed tokens for the always-dark contact/footer block — must NOT flip with theme,
+   since --ink/--paper swap meaning between light and dark mode */
+:root{
+  --deep-bg:#1C2023;
+  --deep-text:#F1F1EC;
+  --deep-text-soft:#B7BCBB;
+  --deep-line:#3A3F42;
+}
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto;}
   *{animation-duration:0.001ms !important;animation-iteration-count:1 !important;transition-duration:0.001ms !important;}
@@ -250,19 +258,19 @@ a.accent:hover{border-color:var(--accent);}
 }
 
 /* ---------- contact ---------- */
-.contact{background:var(--ink);color:var(--paper);border-bottom:none;}
+.contact{background:var(--deep-bg);color:var(--deep-text);border-bottom:none;}
 .contact .section-label{color:var(--accent-strong);}
-.contact h2{color:var(--paper);font-size:clamp(1.9rem,2vw + 1.4rem,3rem);max-width:18ch;margin-bottom:24px;}
-.contact p{color:color-mix(in srgb, var(--paper) 70%, transparent);max-width:56ch;font-size:1.06rem;margin-bottom:36px;}
+.contact h2{color:var(--deep-text);font-size:clamp(1.9rem,2vw + 1.4rem,3rem);max-width:18ch;margin-bottom:24px;}
+.contact p{color:var(--deep-text-soft);max-width:56ch;font-size:1.06rem;margin-bottom:36px;}
 .contact-ctas{display:flex;gap:16px;flex-wrap:wrap;}
-.contact .btn-primary{background:var(--accent);border-color:var(--accent);color:#fff;}
+.contact .btn-primary{background:var(--accent);border-color:var(--accent);color:#0D1210;}
 .contact .btn-primary:hover{background:var(--accent-strong);border-color:var(--accent-strong);}
-.contact .btn-ghost{border-color:color-mix(in srgb, var(--paper) 30%, transparent);color:var(--paper);}
-.contact .btn-ghost:hover{border-color:var(--paper);}
+.contact .btn-ghost{border-color:var(--deep-line);color:var(--deep-text);}
+.contact .btn-ghost:hover{border-color:var(--deep-text);}
 
-footer{padding:34px var(--pad);font-family:var(--sans);font-size:0.82rem;color:var(--ink-faint);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--ink);color:color-mix(in srgb, var(--paper) 55%, transparent);}
-footer a{color:color-mix(in srgb, var(--paper) 75%, transparent);}
-footer a:hover{color:var(--paper);}
+footer{padding:34px var(--pad);font-family:var(--sans);font-size:0.82rem;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;background:var(--deep-bg);color:var(--deep-text-soft);}
+footer a{color:var(--deep-text-soft);}
+footer a:hover{color:var(--deep-text);}
 </style>
 </head>
 <body>
